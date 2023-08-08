@@ -4,6 +4,6 @@ export class ListTreasuryUseCase implements UseCaseInterface<Array<object>>
 {
 	public async handle(): Promise<Array<object>>
 	{
-		return Promise.resolve([{ id: 1, name: 'Tesouro Selic 2026' }]);
+		return Promise.resolve([{ id: 1, name: 'Tesouro Selic 2026' }, { id: 2, name: 'Tesouro Selic 2029' }]);
 	}
 }
