@@ -1,0 +1,125 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "ms-bff",
+		"description": "BFF que fica entre os aplicativos cliente e os microsserviços.",
+		"contact": {
+			"email": "lucas.hcruz.costa@gmail.com"
+		},
+		"version": "1.0.0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:3000"
+		}
+	],
+	"tags": [
+		{
+			"name": "health",
+			"description": "Informações sobre a saúde do serviço"
+		},
+		{
+			"name": "investments",
+			"description": "Informações sobre os investimentos"
+		}
+	],
+	"paths": {
+		"/health": {
+			"get": {
+				"tags": [
+					"health"
+				],
+				"summary": "Informa o status da serviço",
+				"responses": {
+					"200": {
+						"description": "200 OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Health"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/investments/treasury-bonds": {
+			"get": {
+				"tags": [
+					"investments"
+				],
+				"summary": "Lista os investimentos do tipo tesouro direto",
+				"responses": {
+					"200": {
+						"description": "200 OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Treasury"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Health": {
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"example": "ok"
+					},
+					"info": {
+						"type": "object",
+						"properties": {
+							"svc": {
+								"type": "object",
+								"properties": {
+									"status": {
+										"type": "string",
+										"example": "up"
+									}
+								}
+							}
+						}
+					},
+					"error": {
+						"type": "object"
+					},
+					"details": {
+						"type": "object",
+						"properties": {
+							"svc": {
+								"type": "object",
+								"properties": {
+									"status": {
+										"type": "string",
+										"example": "up"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"Treasury": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"example": 1
+					},
+					"name": {
+						"type": "string",
+						"example": "Tesouro Selic 2026"
+					}
+				}
+			}
+		}        
+	}
+}

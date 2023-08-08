@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff
+  namespace: code-treasury
+spec:
+  selector:
+    matchLabels:
+      app: bff
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bff
+    spec:
+      containers:
+      - name: bff
+        image: lucashccosta/code-treasury-bff:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bff
+  namespace: code-treasury
+spec:
+  selector:
+    app: bff
+  type: ClusterIP
+  ports:
+  - name: bff-svc
+    port: 3000
+    targetPort: 3000

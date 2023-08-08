@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bff
+  namespace: code-treasury
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    konghq.com/host-aliases: "code-treasury.bff.svc"
+    konghq.com/methods: GET,POST
+    konghq.com/preserve-host: "false"
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "code-treasury.bff.svc"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 3000
