@@ -13,7 +13,6 @@ export class TesouroNacionalRepository implements InvestmentRepositoryInterface
         const { response: { TrsrBdTradgList: treasuryBonds }} = await response.json();
 
         for (const { TrsrBd: treasuryBond } of treasuryBonds) {
-            console.log(treasuryBond);
             if (treasuryBond.untrInvstmtVal === 0 || treasuryBond.minInvstmtAmt === 0) {
                 continue;
             }
