@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bot-config
+  namespace: code-treasury
+data:
+  CACHE_HOST: "127.0.0.1"
+  CACHE_PORT: "6379"
+  CACHE_TREASURY_PREFIX_KEY: "code-treasury"
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: bot-cron
+  namespace: code-treasury
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: bot
+            image: lucashccosta/code-treasury-bot:latest
+            imagePullPolicy: IfNotPresent
+            command:
+            - npm run start
+          restartPolicy: OnFailure
