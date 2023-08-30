@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start:dev": "npx ts-node index.ts",
-    "start": "node ./dist/index.js"
+    "build": "tsc -p .",
+    "start:dev": "npx ts-node ./src/index.ts",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",

@@ -4,7 +4,7 @@ metadata:
   name: bot-config
   namespace: code-treasury
 data:
-  CACHE_HOST: "127.0.0.1"
+  CACHE_HOST: "172.18.0.2" # docker inspect codetreasury-shared-redis > IPAddress
   CACHE_PORT: "6379"
   CACHE_TREASURY_PREFIX_KEY: "code-treasury"
 ---
@@ -17,12 +17,15 @@ spec:
   schedule: "* * * * *"
   jobTemplate:
     spec:
+      backoffLimit: 5 # used to specify the number of retries before marking the job as failed
       template:
         spec:
           containers:
           - name: bot
             image: lucashccosta/code-treasury-bot:latest
-            imagePullPolicy: IfNotPresent
-            command:
-            - npm run start
+            imagePullPolicy: Always
+            command: [ "npm", "run", "start" ]
+            envFrom:
+              - configMapRef:
+                  name: bot-config
           restartPolicy: OnFailure
